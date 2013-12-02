@@ -89,13 +89,15 @@ module WebSocket
         # Maybe someone is providing even plain string?
         # Better safe than sorry...
         input = env['rack.input']
-        @leftovers =  if input.respond_to?(:readpartial)
-                        input.readpartial
-                      elsif input.respond_to?(:read)
-                        input.read
-                      else
-                        input.to_s
-                      end
+        # to make tubesock work with passenger
+        @leftovers = ""
+        # @leftovers =  if input.respond_to?(:readpartial)
+        #                 input.readpartial
+        #               elsif input.respond_to?(:read)
+        #                 input.read
+        #               else
+        #                 input.to_s
+        #               end
 
         set_version
         @state = :finished
